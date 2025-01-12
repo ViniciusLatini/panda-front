@@ -1,7 +1,9 @@
-<template>
-  <HelloWorld />
-</template>
-
 <script setup>
-  //
+import SearchInput from '@/components/SearchInput.vue';
+
+
 </script>
+
+<template>
+  <SearchInput />
+</template>
