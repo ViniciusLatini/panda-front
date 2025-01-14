@@ -15,14 +15,13 @@ function handleVideo() {
     query: { id: video.id }
   });
 }
-
 </script>
 
 <template>
   <div :class="['card-container', flipped ? 'flipped' : '']" style="width: 300px; height: 200px; margin-bottom: 20px;"
     class="font-weight-light cursor-pointer" @click="handleVideo" @mouseenter="flip" @mouseleave="flip">
     <div class="front rounded-lg" style="background-color: blue;">
-      <v-img src="https://b-vz-01e39d53-1ec.tv.pandavideo.com.br/470abd28-1459-48de-9ef4-403bdc5c3046/thumbnail.jpg"
+      <v-img :src="video.thumbnail"
         alt="thumb" :width="300" :height="200" cover class="rounded-lg" />
 
       <div class="detailsContainer rounded-lg">
@@ -96,6 +95,7 @@ function handleVideo() {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap:10px;
 }
 
 

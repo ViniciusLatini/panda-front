@@ -40,7 +40,8 @@ onMounted(async () => {
         <h2 class="mb-2">
           Descrição
         </h2>
-        <p>{{ video.description }}</p>
+        <p v-if="video.description">{{ video.description }}</p>
+        <p v-else>Esse vídeo não possui descrição</p>
       </div>
     </v-container>
 
