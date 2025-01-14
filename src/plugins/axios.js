@@ -1,3 +1,4 @@
+import { useAppStore } from '@/stores/app';
 import axios from 'axios';
 
 const axiosClient = axios.create({
@@ -9,6 +10,16 @@ axiosClient.interceptors.request.use(config => {
   if (token)
     config.headers.Authorization = `Bearer ${token}`;
   return config
+})
+
+axiosClient.interceptors.response.use(response => {
+  return response
+}, error => {
+  const appStore = useAppStore()
+  if (error.status === 403) {
+    appStore.logout()
+  }
+  throw error
 })
 
 export default axiosClient;
