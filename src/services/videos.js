@@ -9,3 +9,8 @@ export async function getVideoByIdService(id) {
   const { data } = await axiosClient.get(`/videos/${id}`);
   return data;
 }
+
+export async function editVideoInfoService(videoId, values) {
+  const { data } = await axiosClient.put(`/videos/${videoId}`, values);
+  return data;
+}

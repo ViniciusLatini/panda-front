@@ -1,4 +1,5 @@
 <script setup>
+import EditVideoModal from '@/components/EditVideoModal.vue';
 import PandaPlayer from '@/components/PandaPlayer.vue';
 import router from '@/router';
 import { getVideoByIdService } from '@/services/videos';
@@ -9,6 +10,10 @@ const video = ref('');
 function goBack() {
   router.replace("/");
 }
+
+const updateVideo = (newValue) => {
+  video.value = newValue;
+};
 
 onMounted(async () => {
   const videoId = router.currentRoute.value.query.id;
@@ -26,18 +31,19 @@ onMounted(async () => {
     <v-row class="align-self-start align-center ga-5 self-start w-100">
       <v-btn @click="goBack" density="comfortable" icon="mdi-arrow-left" />
       <h1>{{ video.title }}</h1>
+      <EditVideoModal @update="updateVideo" :videoId="router.currentRoute.value.query.id" />
     </v-row>
 
     <v-container :max-width="920" class="mx-auto" style="padding:0">
       <PandaPlayer :video-player="video.video_player" />
+      <div class="mt-4 text-justify">
+        <h2 class="mb-2">
+          Descrição
+        </h2>
+        <p>{{ video.description }}</p>
+      </div>
     </v-container>
 
-    <div class="text-justify" style="max-width: 920px;">
-      <h2 class="mb-2">
-        Descrição
-      </h2>
-      <p>{{ video.description }}</p>
-    </div>
   </v-container>
   <v-container v-else class="d-flex align-center justify-center text-center h-50">
     <v-progress-circular indeterminate />
