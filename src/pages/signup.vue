@@ -1,15 +1,14 @@
 <script setup>
 import { ref } from 'vue'
 import { useField, useForm } from 'vee-validate'
-import { useAppStore } from '@/stores/app'
 import router from '@/router'
+import { signUpService } from '@/services/user'
 
-const appStore = useAppStore()
 const visible = ref(false)
-const signinError = ref({
+const signupError = ref({
   show: false,
-  message: 'Falha ao realizar login, tente novamente.',
-  title: 'Erro ao realizar login'
+  message: 'Falha ao criar conta, tente novamente.',
+  title: 'Erro ao criar conta'
 })
 const loading = ref(false)
 
@@ -37,16 +36,16 @@ const email = useField('email')
 const password = useField('password')
 
 const submit = handleSubmit(async (values) => {
-  signinError.value.show = false
+  signupError.value.show = false
   loading.value = true
   try {
-    await appStore.signIn(values)
-    router.push("/")
+    await signUpService(values)
+    router.replace("/signin")
   } catch (error) {
-    signinError.value.show = true
-    if (error.status == 401) {
-      signinError.value.message = 'Usuário ou senha inválidos, tente novamente.'
-      signinError.value.title = 'Credenciais inválidas'
+    signupError.value.show = true
+    if (error.status == 409) {
+      signupError.value.title = 'Falha ao realizar cadastro'
+      signupError.value.message = 'Email já cadastrado.'
     }
     console.log('error:', error);
   }
@@ -61,10 +60,10 @@ const submit = handleSubmit(async (values) => {
       <v-img src="../assets/logo.svg" max-height="105" max-width="250" class="mx-auto mb-3" />
 
       <p class="text-center mb-3">
-        Insira suas credenciais para acessar seus vídeos!
+        Insira suas credenciais criar sua conta!
       </p>
 
-      <v-alert v-if="signinError.show" text="Verifique suas credenciais e tente novamente." class="mb-3"
+      <v-alert v-if="signupError.show" text="Verifique suas credenciais e tente novamente." class="mb-3"
         title="Credenciais inválidas" type="error" />
 
       <form @submit.prevent="submit" class="mb-6">
@@ -76,13 +75,13 @@ const submit = handleSubmit(async (values) => {
           :type="visible ? 'text' : 'password'" @click:append-inner="visible = !visible" />
 
         <v-btn :loading="loading" class="mt-5 pa-6" type="submit" block>
-          Entrar
+          Criar conta
         </v-btn>
       </form>
 
       <p class="text-center">
-        Não possui uma conta? 
-        <router-link to="/signup">Clique aqui!</router-link>
+        Já possui uma conta? 
+        <router-link to="/signin">Clique aqui!</router-link>
       </p>
     </div>
   </v-container>

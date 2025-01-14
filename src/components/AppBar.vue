@@ -6,7 +6,7 @@ const appStore = useAppStore();
 
 </script>
 <template>
-  <v-app-bar v-if="router.currentRoute.value.path !== '/signin'" :elevation="5">
+  <v-app-bar v-if="router.currentRoute.value.path !== '/signin' && router.currentRoute.value.path !== '/signup'" :elevation="5">
     <template #prepend>
       <v-img src="../assets/logo-light.svg" :height="70" :width="200" />
     </template>
