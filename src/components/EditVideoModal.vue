@@ -8,6 +8,7 @@ const emit = defineEmits(['update']);
 const dialog = ref(false);
 const rules = ref({
   required: value => !!value || 'Campo obrigatório.',
+  description: value => value.length <= 300 || 'A descrição deve ter no máximo 300 caracteres.'
 });
 const formRef = ref(null);
 const title = ref('')
@@ -50,7 +51,7 @@ async function onSubmit() {
           </div>
           <v-text-field v-model="title" :rules="[rules.required]" label="Título" placeholder="Digite o título do vídeo"
             variant="outlined" class="mb-3" />
-          <v-textarea v-model="description" :rules="[rules.required]" label="Descrição"
+          <v-textarea v-model="description" :rules="[rules.required, rules.description]" label="Descrição"
             placeholder="Digite a descrição do vídeo" :counter="300" class="mb-2" rows="2" variant="outlined"
             persistent-counter />
         </v-card-text>
