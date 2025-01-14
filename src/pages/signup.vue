@@ -40,7 +40,7 @@ const submit = handleSubmit(async (values) => {
   loading.value = true
   try {
     await signUpService(values)
-    router.replace("/signin")
+    router.push("/signin")
   } catch (error) {
     signupError.value.show = true
     if (error.status == 409) {
@@ -66,7 +66,7 @@ const submit = handleSubmit(async (values) => {
       <v-alert v-if="signupError.show" text="Verifique suas credenciais e tente novamente." class="mb-3"
         title="Credenciais inválidas" type="error" />
 
-      <form @submit.prevent="submit" class="mb-6">
+      <form class="mb-6" @submit.prevent="submit">
         <v-text-field v-model="email.value.value" variant="outlined" :error-messages="email.errorMessage.value"
           label="Email" placeholder="Digite seu email" />
 
@@ -80,8 +80,10 @@ const submit = handleSubmit(async (values) => {
       </form>
 
       <p class="text-center">
-        Já possui uma conta? 
-        <router-link to="/signin">Clique aqui!</router-link>
+        Já possui uma conta?
+        <router-link to="/signin">
+          Clique aqui!
+        </router-link>
       </p>
     </div>
   </v-container>
