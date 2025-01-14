@@ -1,4 +1,5 @@
 <script setup>
+import router from "@/router";
 import { ref } from "vue";
 
 const flipped = ref(false);
@@ -8,11 +9,18 @@ const flip = () => {
   flipped.value = !flipped.value;
 };
 
+function handleVideo() {
+  router.push({
+    path: '/video',
+    query: { id: video.id }
+  });
+}
+
 </script>
 
 <template>
   <div :class="['card-container', flipped ? 'flipped' : '']" style="width: 300px; height: 200px; margin-bottom: 20px;"
-    class="font-weight-light cursor-pointer" @mouseenter="flip" @mouseleave="flip">
+    class="font-weight-light cursor-pointer" @click="handleVideo" @mouseenter="flip" @mouseleave="flip">
     <div class="front rounded-lg" style="background-color: blue;">
       <v-img src="https://b-vz-01e39d53-1ec.tv.pandavideo.com.br/470abd28-1459-48de-9ef4-403bdc5c3046/thumbnail.jpg"
         alt="thumb" :width="300" :height="200" cover class="rounded-lg" />
