@@ -1,11 +1,10 @@
-// Utilities
 import router from '@/router'
 import { signInService } from '@/services/user'
 import { defineStore } from 'pinia'
 
 export const useAppStore = defineStore('app', {
   state: () => ({
-    user: {}
+    user: {},
   }),
   actions: {
     async signIn(body) {
