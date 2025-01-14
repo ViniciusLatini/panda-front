@@ -14,7 +14,7 @@ const filteredVideos = computed(() => {
   return videos.value.filter(video => video.title.toLowerCase().includes(search.value.toLowerCase()));
 });
 
-watch(filteredVideos , () => {
+watch(filteredVideos, () => {
   loaded.value = true;
   loading.value = false;
 });
@@ -27,7 +27,6 @@ onMounted(async () => {
   try {
     const res = await getVideosService()
     videos.value = res
-    console.log('res: ', res)
   } catch (error) {
     console.error(error);
   }
@@ -40,9 +39,14 @@ onMounted(async () => {
     append-inner-icon="mdi-magnify" density="comfortable" variant="solo" hide-details single-line persistent-placeholder
     :width="500" />
 
-  <div class="cardsContainer mx-10">
-    <FlipCard v-for="video in filteredVideos" :key="video.id" :video="video" />
+  <div v-if="videos.length > 0" class="cardsContainer mx-10">
+    <FlipCard v-for="video in filteredVideos" v-if="filteredVideos.length > 0" :key="video.id" :video="video" />
+    <span v-else class="text-h5">Nenhum vídeo encontrado</span>
   </div>
+
+  <v-container v-else class="d-flex align-center justify-center text-center h-50">
+    <v-progress-circular indeterminate />
+  </v-container>
 </template>
 
 <style scoped>
